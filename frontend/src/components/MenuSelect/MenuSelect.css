@@ -1,0 +1,27 @@
+.menu-select-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-link-container {
+  text-decoration: none;
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  padding: 10px;
+  transition: 300ms;
+}
+
+.select-link-container:hover {
+  background-color: var(--red);
+  color: white;
+}
+
+.select-link-container.active {
+  background-color: var(--red);
+  color: white;
+}

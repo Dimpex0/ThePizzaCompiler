@@ -1,0 +1,43 @@
+.pizza-card-container {
+  width: 250px;
+  height: 425px;
+  text-align: center;
+  background-color: var(--dark-grey);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: auto;
+  color: white;
+}
+
+.pizza-card-container img {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+
+.pizza-card-title {
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+.pizza-card-ingredients {
+  margin: 10px 0;
+  padding: 0 20px;
+  font-size: 12px;
+  color: rgb(151, 151, 151);
+  height: 75px;
+}
+
+.pizza-card-container a {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  background-color: var(--yellow);
+  width: 100%;
+  text-transform: uppercase;
+  padding: 10px 0;
+  transition: 300ms;
+}
+
+.pizza-card-container a:hover {
+  background-color: var(--red);
+}
