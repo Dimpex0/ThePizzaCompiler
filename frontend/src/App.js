@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootPage from "./pages/Root/Root";
 import MenuPage from "./pages/Menu/Menu";
-import PizzaPage from "./pages/Pizza/Pizza";
+import PizzaMenuPage from "./pages/PizzaMenu/PizzaMenu";
 import DrinksPage from "./pages/Drinks/Drinks";
+import PizzaDetailsPage from "./pages/PizzaDetails/PizzaDetails";
 
 const router = createBrowserRouter([
   {
@@ -15,9 +16,10 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <PizzaPage />,
+            element: <PizzaMenuPage />,
           },
-          { path: "pizza", element: <PizzaPage /> },
+          { path: "pizza", element: <PizzaMenuPage /> },
+          { path: "pizza/:pizza-slug", element: <PizzaDetailsPage /> },
           { path: "drinks", element: <DrinksPage /> },
         ],
       },

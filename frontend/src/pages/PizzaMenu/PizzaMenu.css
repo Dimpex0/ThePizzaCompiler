@@ -1,0 +1,12 @@
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.menu-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}

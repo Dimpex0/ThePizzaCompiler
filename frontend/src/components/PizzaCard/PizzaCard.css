@@ -1,11 +1,9 @@
 .pizza-card-container {
-  width: 250px;
-  height: 425px;
+  width: 300px;
   text-align: center;
   background-color: var(--dark-grey);
   border-radius: 12px;
   overflow: hidden;
-  margin: auto;
   color: white;
 }
 

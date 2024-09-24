@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 class Ingredient(models.Model):
     
@@ -27,6 +28,11 @@ class Ingredient(models.Model):
         max_digits=7,
         decimal_places=2,
         default=0.00,
+        null=False,
+        blank=False,
+    )
+    stock = models.PositiveIntegerField(
+        default=0,
         null=False,
         blank=False,
     )
@@ -68,3 +74,12 @@ class Pizza(models.Model):
         null=False,
         blank=False,
     )
+    slug = models.SlugField(
+        max_length=255,
+        null=True,
+        blank=True,
+        )
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Pizza, self).save(*args, **kwargs)

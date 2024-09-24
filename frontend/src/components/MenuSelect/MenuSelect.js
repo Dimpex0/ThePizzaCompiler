@@ -7,17 +7,17 @@ export default function MenuSelect() {
   return (
     <section className="menu-select-container">
       <NavLink
-        activeClassName="active"
         to="/menu/pizza"
-        className="select-link-container"
+        className={`select-link-container ${({ isActive }) =>
+          isActive ? "active" : ""}`}
       >
         <i className="fa-solid fa-pizza-slice"></i>
         <p>Pizza</p>
       </NavLink>
       <NavLink
-        activeClassName="active"
         to="/menu/drinks"
-        className="select-link-container"
+        className={`select-link-container ${({ isActive }) =>
+          isActive ? "active" : ""}`}
       >
         <i className="fa-solid fa-glass-water"></i>
         <p>Drinks</p>
