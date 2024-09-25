@@ -7,6 +7,8 @@ import mediumImg from "../../assets/icons/medium-pizza-icon.png";
 import largeImg from "../../assets/icons/large-pizza-icon.png";
 
 import "./PizzaDetails.css";
+import AddToCartButton from "../../components/AddToCartButton/AddToCartButton";
+import { useCartStore } from "../../store/cart";
 
 export default function PizzaDetailsPage() {
   const { pizzaSlug } = useParams();
@@ -17,6 +19,8 @@ export default function PizzaDetailsPage() {
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState();
   const [error, setError] = useState("");
+
+  const { incrementQuantity } = useCartStore();
 
   // Map for pizza sizes and prices
   const sizeMap = {
@@ -52,7 +56,6 @@ export default function PizzaDetailsPage() {
         return acc;
       }, {});
       setSeparatedIngredients(categorizedIngredients);
-      console.log(categorizedIngredients);
     }
   }, [pizza]);
 
@@ -164,11 +167,20 @@ export default function PizzaDetailsPage() {
                   ></i>
                   <p>{quantity}</p>
                   <i
-                    onClick={() => setQuantity((prev) => prev + 1)}
+                    onClick={() => {
+                      setQuantity((prev) => prev + 1);
+                    }}
                     className="fa-solid fa-plus"
                   ></i>
                 </div>
-                <button>Add to cart</button>
+                <AddToCartButton
+                  itemData={{
+                    item: pizza,
+                    removedIngredients: [...removedIngredients],
+                    selectedSize,
+                    quantity,
+                  }}
+                />
               </div>
             </div>
           </section>

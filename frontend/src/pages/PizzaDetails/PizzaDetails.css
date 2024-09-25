@@ -36,6 +36,11 @@ h1 {
   padding: 5px 10px;
   font-size: 18px;
   border-radius: 12px;
+  transition: 300ms;
+}
+
+.pizza-icon-container:hover {
+  background-color: var(--red);
 }
 
 .pizza-icon-container img {
@@ -127,4 +132,9 @@ h1 {
   text-align: center;
   text-transform: uppercase;
   border-radius: 6px;
+  transition: 300ms;
+}
+
+.add-to-cart-container button:hover {
+  background-color: var(--red);
 }

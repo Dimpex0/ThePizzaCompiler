@@ -4,6 +4,8 @@ import MenuPage from "./pages/Menu/Menu";
 import PizzaMenuPage from "./pages/PizzaMenu/PizzaMenu";
 import DrinksPage from "./pages/Drinks/Drinks";
 import PizzaDetailsPage from "./pages/PizzaDetails/PizzaDetails";
+import { useCartStore } from "./store/cart";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { cart } = useCartStore();
+
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
   return <RouterProvider router={router}></RouterProvider>;
 }
 
