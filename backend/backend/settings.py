@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # own apps
-    'backend.product',
+    'backend.pizza',
     
     # 3rd party apps
     'rest_framework',

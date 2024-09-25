@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
+
+UserModel = get_user_model()
 
 class Ingredient(models.Model):
     
