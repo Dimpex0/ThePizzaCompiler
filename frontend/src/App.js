@@ -19,7 +19,7 @@ const router = createBrowserRouter([
             element: <PizzaMenuPage />,
           },
           { path: "pizza", element: <PizzaMenuPage /> },
-          { path: "pizza/:pizza-slug", element: <PizzaDetailsPage /> },
+          { path: "pizza/:pizzaSlug", element: <PizzaDetailsPage /> },
           { path: "drinks", element: <DrinksPage /> },
         ],
       },

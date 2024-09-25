@@ -1,0 +1,130 @@
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pizza-section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pizza-section > img {
+  display: block;
+  width: 500px;
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  align-self: flex-start;
+}
+
+.pizza-details {
+  width: 500px;
+  max-width: 100%;
+}
+
+.sizes-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pizza-icon-container {
+  text-align: center;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+.pizza-icon-container img {
+  width: 50px;
+}
+
+.pizza-icon-container.selected {
+  background-color: var(--yellow);
+  color: white;
+}
+
+.pizza-icon-container.selected img {
+  filter: invert();
+}
+
+.ingredients-container {
+  padding: 0 20px;
+}
+
+.ingredient-container > p {
+  font-size: 28px;
+  background-color: var(--yellow);
+  margin: 10px 0;
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: white;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ingredient-item.removed > p {
+  text-decoration: line-through;
+}
+
+.remove-button,
+.add-button {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.remove-button {
+  background-color: var(--red);
+}
+
+.add-button {
+  background-color: var(--green);
+}
+
+.add-to-cart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  height: 50px;
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 30px;
+}
+
+.add-to-cart-container .price {
+  font-size: 36px;
+}
+
+.add-to-cart-container button {
+  all: unset;
+  cursor: pointer;
+  background-color: var(--green);
+  color: white;
+  padding: 5px 10px;
+  height: 100%;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 6px;
+}
