@@ -18,66 +18,59 @@ export default function PizzaDetailsPage() {
   const [price, setPrice] = useState();
   const [error, setError] = useState("");
 
+  // Map for pizza sizes and prices
+  const sizeMap = {
+    small: { price: pizza?.small_price, img: smallImg, width: 50 },
+    medium: { price: pizza?.medium_price, img: mediumImg, width: 75 },
+    large: { price: pizza?.large_price, img: largeImg, width: 60 },
+  };
+
+  // Update price based on selected size and quantity
   useEffect(() => {
-    if (pizza) {
-      if (selectedSize === "small") {
-        setPrice((quantity * pizza.small_price).toFixed(2));
-      } else if (selectedSize === "medium") {
-        setPrice((quantity * pizza.medium_price).toFixed(2));
-      } else if (selectedSize === "large") {
-        setPrice((quantity * pizza.large_price).toFixed(2));
-      } else {
-        setPrice("Error");
-      }
+    if (pizza && sizeMap[selectedSize]?.price) {
+      setPrice((quantity * sizeMap[selectedSize].price).toFixed(2));
     }
   }, [pizza, quantity, selectedSize]);
 
+  // Separate ingredients into categories
   useEffect(() => {
     if (pizza) {
-      const ingredients = pizza.ingredients;
-      const DOUGH = ingredients.filter(
-        (ingredient) => ingredient.type === "DOUGH"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, DOUGH: DOUGH }));
-      const SAUCE = ingredients.filter(
-        (ingredient) => ingredient.type === "SAUCE"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, SAUCE: SAUCE }));
-      const CHEESE = ingredients.filter(
-        (ingredient) => ingredient.type === "CHEESE"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, CHEESE: CHEESE }));
-      const MEAT = ingredients.filter(
-        (ingredient) => ingredient.type === "MEAT"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, MEAT: MEAT }));
-      const VEGETABLE = ingredients.filter(
-        (ingredient) => ingredient.type === "VEGETABLE"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, VEGETABLE: VEGETABLE }));
-      const HERB_SPICE = ingredients.filter(
-        (ingredient) => ingredient.type === "HERB_SPICE"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, HERB_SPICE: HERB_SPICE }));
-      const SPECIAL = ingredients.filter(
-        (ingredient) => ingredient.type === "SPECIAL"
-      );
-      setSeparatedIngredients((prev) => ({ ...prev, SPECIAL: SPECIAL }));
+      const types = [
+        "DOUGH",
+        "SAUCE",
+        "CHEESE",
+        "MEAT",
+        "VEGETABLE",
+        "HERB_SPICE",
+        "SPECIAL",
+      ];
+      const categorizedIngredients = types.reduce((acc, type) => {
+        const filtered = pizza.ingredients.filter(
+          (ingredient) => ingredient.type === type
+        );
+        if (filtered.length > 0) acc[type] = filtered;
+        return acc;
+      }, {});
+      setSeparatedIngredients(categorizedIngredients);
+      console.log(categorizedIngredients);
     }
   }, [pizza]);
 
   useEffect(() => {
     async function fetchPizza() {
-      const response = await getPizzaDetails(pizzaSlug);
-      const responseData = await response.json();
-      if (response.ok) {
-        setPizza(responseData);
-        setError("");
-      } else {
-        setError("Couldn't find pizza.");
+      try {
+        const response = await getPizzaDetails(pizzaSlug);
+        const responseData = await response.json();
+        if (response.ok) {
+          setPizza(responseData);
+          setError("");
+        } else {
+          setError("Couldn't find pizza.");
+        }
+      } catch {
+        setError("Error fetching pizza details.");
       }
     }
-
     fetchPizza();
   }, [pizzaSlug]);
 
@@ -91,93 +84,72 @@ export default function PizzaDetailsPage() {
             <img src={pizza.image} alt={pizza.name} />
             <div className="pizza-details">
               <div className="sizes-container">
-                <div
-                  onClick={() => setSelectedSize("small")}
-                  className={`pizza-icon-container${
-                    selectedSize === "small" ? " selected" : ""
-                  }`}
-                >
-                  <img
-                    style={{ width: 50 + "px" }}
-                    src={smallImg}
-                    alt="small pizza icon"
-                  />
-                  <p>{pizza.small_price}$</p>
-                </div>
-                <div
-                  onClick={() => setSelectedSize("medium")}
-                  className={`pizza-icon-container${
-                    selectedSize === "medium" ? " selected" : ""
-                  }`}
-                >
-                  <img
-                    style={{ width: 75 + "px" }}
-                    src={mediumImg}
-                    alt="medium pizza icon"
-                  />
-                  <p>{pizza.medium_price}$</p>
-                </div>
-                <div
-                  onClick={() => setSelectedSize("large")}
-                  className={`pizza-icon-container${
-                    selectedSize === "large" ? " selected" : ""
-                  }`}
-                >
-                  <img
-                    style={{ width: 60 + "px" }}
-                    src={largeImg}
-                    alt="large pizza icon"
-                  />
-                  <p>{pizza.large_price}$</p>
-                </div>
-              </div>
-              <div className="ingredients-container">
-                {Object.keys(separatedIngredients).map((type) => (
-                  <div className="ingredient-container" key={type}>
-                    <p>{type}</p>
-                    {separatedIngredients[type].map((ingredient) => (
-                      <div
-                        className={`ingredient-item${
-                          removedIngredients.some(
-                            (removed) => removed.id === ingredient.id
-                          )
-                            ? " removed"
-                            : ""
-                        }`}
-                        key={ingredient.id}
-                      >
-                        {!removedIngredients.some(
-                          (removed) => removed.id === ingredient.id
-                        ) && (
-                          <i
-                            onClick={() =>
-                              setRemovedIngredients((prev) => [
-                                ...prev,
-                                ingredient,
-                              ])
-                            }
-                            className="fa-solid fa-xmark remove-button"
-                          ></i>
-                        )}
-                        <p>{ingredient.name}</p>
-                        {removedIngredients.some(
-                          (removed) => removed.id === ingredient.id
-                        ) && (
-                          <i
-                            onClick={() =>
-                              setRemovedIngredients((prev) =>
-                                prev.filter(
-                                  (removed) => removed.id !== ingredient.id
-                                )
-                              )
-                            }
-                            className="fa-solid fa-plus add-button"
-                          ></i>
-                        )}
-                      </div>
-                    ))}
+                {Object.keys(sizeMap).map((size) => (
+                  <div
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`pizza-icon-container${
+                      selectedSize === size ? " selected" : ""
+                    }`}
+                  >
+                    <img
+                      style={{ width: sizeMap[size].width + "px" }}
+                      src={sizeMap[size].img}
+                      alt={`${size} pizza icon`}
+                    />
+                    <p>{sizeMap[size].price}$</p>
                   </div>
                 ))}
+              </div>
+              <div className="ingredients-container">
+                {Object.entries(separatedIngredients).map(
+                  ([type, ingredients]) => (
+                    <div className="ingredient-container" key={type}>
+                      <p>{type}</p>
+                      {ingredients.map((ingredient) => (
+                        <div
+                          className={`ingredient-item${
+                            removedIngredients.some(
+                              (removed) => removed.id === ingredient.id
+                            )
+                              ? " removed"
+                              : ""
+                          }`}
+                          key={ingredient.id}
+                        >
+                          {!removedIngredients.some(
+                            (removed) => removed.id === ingredient.id
+                          ) && (
+                            <i
+                              onClick={() =>
+                                setRemovedIngredients((prev) => [
+                                  ...prev,
+                                  ingredient,
+                                ])
+                              }
+                              className="fa-solid fa-xmark remove-button"
+                            ></i>
+                          )}
+                          <p>{ingredient.name}</p>
+                          {removedIngredients.some(
+                            (removed) => removed.id === ingredient.id
+                          ) && (
+                            <i
+                              onClick={() =>
+                                setRemovedIngredients((prev) =>
+                                  prev.filter(
+                                    (removed) => removed.id !== ingredient.id
+                                  )
+                                )
+                              }
+                              className="fa-solid fa-plus add-button"
+                            ></i>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )
+                )}
               </div>
               <div className="add-to-cart-container">
                 <p className="price">{price}$</p>

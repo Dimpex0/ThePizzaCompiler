@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import pizzaPng from "../../assets/demo/images/Pizza.png";
 import "./PizzaCard.css";
 
 export default function PizzaCard({ pizza }) {
@@ -11,7 +10,7 @@ export default function PizzaCard({ pizza }) {
 
   return (
     <div className="pizza-card-container">
-      <img src={image} />
+      <img src={image} alt={name} />
       <p className="pizza-card-title">{name}</p>
       <p className="pizza-card-ingredients">{ingredientsText}</p>
       <Link to={`/menu/pizza/${slug}`}>choose</Link>
