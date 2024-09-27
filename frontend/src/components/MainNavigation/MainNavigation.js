@@ -25,6 +25,11 @@ export default function MainNavigation() {
             <li>
               <Link to="/menu">Menu</Link>
             </li>
+            <li>
+              <Link to="/cart">
+                <i className="fa-solid fa-basket-shopping"></i>
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>

@@ -6,6 +6,7 @@ import DrinksPage from "./pages/Drinks/Drinks";
 import PizzaDetailsPage from "./pages/PizzaDetails/PizzaDetails";
 import { useCartStore } from "./store/cart";
 import { useEffect } from "react";
+import CartPage from "./pages/Cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
           { path: "drinks", element: <DrinksPage /> },
         ],
       },
+      { path: "cart", element: <CartPage /> },
     ],
   },
 ]);

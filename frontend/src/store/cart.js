@@ -45,7 +45,9 @@ function incrementDecrementItemQuantity(item, action, quantity) {
         cartCopy[indexOfExistingItem].quantity += quantity;
       } else if (action === "decrement") {
         if (quantity >= cart[indexOfExistingItem].quantity) {
-          return { cart: cart.filter((cartItem) => cartItem.item !== item) };
+          return {
+            cart: cart.filter((cartItem) => cartItem !== item),
+          };
         }
         cartCopy[indexOfExistingItem].quantity -= quantity;
       }
