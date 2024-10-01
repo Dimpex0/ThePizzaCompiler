@@ -5,6 +5,7 @@
   padding: 10px;
   border-radius: 12px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .cart-item img {
@@ -47,4 +48,18 @@
 .remove-btn {
   margin-left: 10px;
   font-size: 20px;
+}
+
+@media screen and (max-width: 950px) {
+  .cart-item img {
+    max-width: 75px;
+  }
+
+  .remove-btn {
+    display: none;
+  }
+
+  .cart-item-price {
+    margin-left: 0;
+  }
 }

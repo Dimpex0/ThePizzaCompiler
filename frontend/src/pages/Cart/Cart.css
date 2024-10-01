@@ -1,5 +1,19 @@
+.page-container {
+  display: flex;
+}
+
 .cart-section {
   width: 70%;
+}
+
+.order-section {
+  width: 30%;
+  background-color: lightgray;
+}
+
+.cart-section,
+.order-section {
+  padding: 30px;
 }
 
 .header-section {
@@ -7,4 +21,15 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid black;
+}
+
+@media screen and (max-width: 950px) {
+  .page-container {
+    flex-direction: column;
+  }
+
+  .cart-section,
+  .order-section {
+    width: 100%;
+  }
 }
