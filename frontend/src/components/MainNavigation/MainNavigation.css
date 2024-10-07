@@ -35,4 +35,16 @@ nav ul li a {
   text-decoration: none;
   color: var(--yellow);
   font-size: 20px;
+  position: relative;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.cart-quantity {
+  position: absolute;
+  top: -15px;
+  right: -5px;
 }
