@@ -21,3 +21,19 @@ export async function login(formData) {
   );
   return response;
 }
+
+export async function checkSession() {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_DOMAIN}/account/check-session/`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCsrfToken(),
+      },
+    }
+  );
+
+  return response;
+}

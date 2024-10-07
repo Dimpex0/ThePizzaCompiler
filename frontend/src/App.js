@@ -9,6 +9,9 @@ import { useEffect, useRef } from "react";
 import CartPage from "./pages/Cart/Cart";
 import { retrieveCart, updateCartItemsToBackend } from "./utils/cart";
 import LoginPage from "./pages/Login/Login";
+import { useAccountStore } from "./store/account";
+import { checkSession } from "./utils/auth";
+import LogoutPage from "./pages/Logout/Logout";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +34,13 @@ const router = createBrowserRouter([
       { path: "cart", element: <CartPage /> },
       {
         path: "account",
-        children: [{ path: "login", element: <LoginPage /> }],
+        children: [
+          { path: "login", element: <LoginPage /> },
+          {
+            path: "logout",
+            element: <LogoutPage />,
+          },
+        ],
       },
     ],
   },
@@ -39,6 +48,26 @@ const router = createBrowserRouter([
 
 function App() {
   const { cart, setCart } = useCartStore();
+
+  const resetAccountData = useAccountStore((state) => state.reset);
+  const updateIsLoggedIn = useAccountStore((state) => state.updateIsLoggedIn);
+  const updateIsAdmin = useAccountStore((state) => state.updateIsAdmin);
+
+  useEffect(() => {
+    async function chechAccountSession() {
+      const response = await checkSession();
+      if (response.ok) {
+        const responseData = await response.json();
+        updateIsLoggedIn(true);
+        if (responseData.isAdmin) {
+          updateIsAdmin(true);
+        }
+      } else {
+        resetAccountData();
+      }
+    }
+    chechAccountSession();
+  }, []);
 
   const isFirstRender = useRef(true);
 
