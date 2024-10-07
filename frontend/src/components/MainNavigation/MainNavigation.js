@@ -20,15 +20,15 @@ export default function MainNavigation() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Offers</Link>
-            </li>
-            <li>
-              <Link to="/menu">Menu</Link>
+              <Link to="/">Menu</Link>
             </li>
             <li>
               <Link to="/cart">
                 <i className="fa-solid fa-basket-shopping"></i>
               </Link>
+            </li>
+            <li>
+              <Link to="/account/login">Login</Link>
             </li>
           </ul>
         </nav>

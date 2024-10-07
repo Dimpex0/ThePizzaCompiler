@@ -20,6 +20,9 @@ DEBUG = bool(int(os.getenv('DEBUG', 1)))
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(' ')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(' ')
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -34,6 +37,8 @@ INSTALLED_APPS = [
     
     # own apps
     'backend.pizza',
+    'backend.cart',
+    'backend.account',
     
     # 3rd party apps
     'rest_framework',

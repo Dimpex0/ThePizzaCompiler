@@ -7,5 +7,5 @@ UserModel = get_user_model()
 
 class Cart(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    items = models.JSONField(null=False, blank=False)
+    items = models.JSONField(null=True, blank=True)
     paid = models.BooleanField(default=False)

@@ -21,7 +21,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/pizza/', include('backend.pizza.urls'))
+    path('api/pizza/', include('backend.pizza.urls')),
+    path('api/cart/', include('backend.cart.urls')),
+    path('api/account/', include('backend.account.urls')),
 ]
 
 if settings.DEBUG:

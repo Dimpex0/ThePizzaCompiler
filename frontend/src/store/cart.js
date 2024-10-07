@@ -62,6 +62,10 @@ const initialState = {
 
 export const useCartStore = create((set) => ({
   ...initialState,
+  setCart: (cart) =>
+    set((state) => ({
+      cart: cart,
+    })),
   addToCart: (item) =>
     set((state) => {
       // Check if item is in cart
