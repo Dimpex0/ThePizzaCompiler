@@ -39,6 +39,18 @@
   width: 100px;
 }
 
+.quantity-actions i {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  transition: 300ms;
+}
+
+.quantity-actions i:hover {
+  color: var(--white-smoke);
+  background-color: var(--dark-grey);
+}
+
 .cart-item-price {
   font-size: 24px;
   margin-left: 50px;
@@ -48,6 +60,11 @@
 .remove-btn {
   margin-left: 10px;
   font-size: 20px;
+  transition: 300ms;
+}
+
+.remove-btn:hover {
+  color: var(--white-smoke);
 }
 
 @media screen and (max-width: 950px) {
