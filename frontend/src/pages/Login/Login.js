@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { login } from "../../utils/auth";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAccountStore } from "../../store/account";
 import { useCartStore } from "../../store/cart";
 

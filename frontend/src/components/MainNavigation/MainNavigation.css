@@ -20,6 +20,7 @@ header {
   align-items: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  row-gap: 20px;
   padding: 20px 80px;
 }
 

@@ -12,6 +12,10 @@ import LoginPage from "./pages/Login/Login";
 import { useAccountStore } from "./store/account";
 import { checkSession } from "./utils/auth";
 import LogoutPage from "./pages/Logout/Logout";
+import PrivacyPolicyPage from "./pages/Legal/PrivacyPolicy/PrivacyPolicy";
+import TermsAndConditionsPage from "./pages/Legal/TermsAndConditions/TermsAndConditions";
+import CookiePolicyPage from "./pages/Legal/CookiePolicy/CookiePolicy";
+import LegalDisclaimerPage from "./pages/Legal/LegalDisclaimer/LegalDisclaimer";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +44,18 @@ const router = createBrowserRouter([
             path: "logout",
             element: <LogoutPage />,
           },
+        ],
+      },
+      {
+        path: "legal",
+        children: [
+          { path: "privacy-policy", element: <PrivacyPolicyPage /> },
+          {
+            path: "terms-and-conditions",
+            element: <TermsAndConditionsPage />,
+          },
+          { path: "cookie-policy", element: <CookiePolicyPage /> },
+          { path: "legal-disclaimer", element: <LegalDisclaimerPage /> },
         ],
       },
     ],
