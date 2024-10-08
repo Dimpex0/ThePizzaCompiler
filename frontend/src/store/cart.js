@@ -93,5 +93,5 @@ export const useCartStore = create((set) => ({
       // Fallback, this function should be called only in the cart page where it's sure that the item exists
       return { cart: [...state.cart] };
     }),
-  resetCart: () => set(() => ({ ...initialState })),
+  reset: () => set(() => ({ ...initialState })),
 }));
