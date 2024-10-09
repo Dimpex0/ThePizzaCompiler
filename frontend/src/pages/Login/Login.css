@@ -1,5 +1,6 @@
 form {
   max-width: 250px;
+  min-height: 320px;
   margin: auto;
   margin-top: 50px;
   gap: 10px;
@@ -21,11 +22,12 @@ form input {
   padding: 10px;
   color: var(--white-smoke);
   width: calc(100% - 23px);
+  border-bottom: 2px solid var(--white-smoke);
   transition: 100ms;
 }
 
 form input:focus {
-  border: 2px solid var(--yellow);
+  border-bottom: 2px solid var(--yellow);
 }
 
 form > a {
@@ -51,6 +53,7 @@ form button {
   color: var(--white-smoke);
   height: 40px;
   text-align: center;
+  text-transform: uppercase;
   transition: 300ms;
 }
 
@@ -63,6 +66,7 @@ form button {
   width: 100%;
   text-align: center;
   color: var(--white-smoke);
+  margin: 10px 0;
 }
 
 .error {

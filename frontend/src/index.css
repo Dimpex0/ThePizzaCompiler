@@ -26,3 +26,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.messages-container {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  font-size: 20px;
+  color: var(--white-smoke);
+}
+
+.p-message {
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.p-message:not(:first-of-type) {
+  margin-top: 10px;
+}
+
+.p-message-success {
+  background-color: var(--green);
+}
+
+.p-message-error {
+  background-color: var(--red);
+}
+
+.p-message-warning {
+  background-color: var(--yellow);
+}

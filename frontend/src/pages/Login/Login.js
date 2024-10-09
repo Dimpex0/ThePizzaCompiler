@@ -33,6 +33,7 @@ export default function LoginPage() {
     // returns {message, isAdmin} and a status code
     if (!response.ok) {
       setError(responseData.message);
+      setFormData({ username: "", password: "" });
     } else {
       updateIsLoggedIn(true);
       if (responseData.isAdmin) {
@@ -43,7 +44,9 @@ export default function LoginPage() {
       if (state) {
         addToCart(state.itemData);
         navigate(-1);
+        return 1;
       }
+      navigate("/");
     }
   }
   return (
