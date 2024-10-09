@@ -64,6 +64,7 @@ const router = createBrowserRouter([
 
 function App() {
   const { cart, setCart } = useCartStore();
+  const { isLoggedIn } = useAccountStore();
 
   const resetAccountData = useAccountStore((state) => state.reset);
   const updateIsLoggedIn = useAccountStore((state) => state.updateIsLoggedIn);
@@ -109,11 +110,11 @@ function App() {
       }
     }
 
-    if (isFirstRender.current) {
+    if (isFirstRender.current || isLoggedIn === true) {
       getCart();
       isFirstRender.current = false;
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

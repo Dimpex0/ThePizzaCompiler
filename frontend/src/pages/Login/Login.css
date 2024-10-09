@@ -1,0 +1,72 @@
+form {
+  max-width: 250px;
+  margin: auto;
+  margin-top: 50px;
+  gap: 10px;
+  background-color: var(--dark-grey);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+form p {
+  text-align: center;
+  color: var(--white-smoke);
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+form input {
+  all: unset;
+  margin: 0;
+  padding: 10px;
+  color: var(--white-smoke);
+  width: calc(100% - 23px);
+  transition: 100ms;
+}
+
+form input:focus {
+  border: 2px solid var(--yellow);
+}
+
+form > a {
+  display: block;
+  width: 100%;
+  text-align: end;
+  color: var(--white-smoke);
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+form button {
+  display: block;
+  width: 100%;
+}
+
+.action-container button {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  background-color: var(--yellow);
+  color: var(--white-smoke);
+  height: 40px;
+  text-align: center;
+  transition: 300ms;
+}
+
+.action-container button:hover {
+  background-color: var(--green);
+}
+
+.action-container a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: var(--white-smoke);
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-size: 16px;
+}

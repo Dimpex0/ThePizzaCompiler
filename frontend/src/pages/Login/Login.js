@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import { login } from "../../utils/auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAccountStore } from "../../store/account";
 import { useCartStore } from "../../store/cart";
+
+import "./Login.css";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -46,9 +48,8 @@ export default function LoginPage() {
   }
   return (
     <>
-      <h1>Login</h1>
-      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
+        <p>Login</p>
         <input
           placeholder="Username"
           name="username"
@@ -64,7 +65,12 @@ export default function LoginPage() {
           required
           onChange={handleInputChange}
         />
-        <button>Login</button>
+        {error && <p className="error">{error}</p>}
+        <Link to="#">Forgot password?</Link>
+        <div className="action-container">
+          <button>Login</button>
+          <Link to="#">Already have an account?</Link>
+        </div>
       </form>
     </>
   );
