@@ -1,14 +1,16 @@
 import { create } from "zustand";
+import _ from "lodash";
 
+// Helper function to check if an item is already in the cart
 function checkIfItemInCart(item) {
   const cart = useCartStore.getState().cart;
-  // Check if item is in cart
-  const existingItemList = cart.filter(
-    (cartItem) => cartItem.item === item.item
+  // Check if the item exists in the cart
+  const existingItemList = cart.filter((cartItem) =>
+    _.isEqual(cartItem.item, item.item)
   );
   if (existingItemList.length > 0) {
     for (let matchingItem of existingItemList) {
-      // checking if the items match
+      // Check if the items match (excluding the quantity field)
       if (matchItems(matchingItem, item) === true) {
         return true;
       }
@@ -17,81 +19,86 @@ function checkIfItemInCart(item) {
   return false;
 }
 
+// Helper function to match items (excluding the quantity field)
 function matchItems(item1, item2) {
-  // creating a string copy of the received item and the one of the cart but without the quantity property
-  const matchingItemWithoutQuantity = String(
-    JSON.stringify(item1).split(',"quantity"')[0]
-  );
-  const itemWithoutQuantity = String(
-    JSON.stringify(item2).split(',"quantity"')[0]
-  );
-  // comprating them to see if they are the same order (example: different removed ingredients from pizza)
-  if (matchingItemWithoutQuantity === itemWithoutQuantity) {
-    return true;
-  }
-  return false;
+  // Clone the objects to avoid mutating the original data
+  const item1Copy = { ...item1 };
+  const item2Copy = { ...item2 };
+
+  // Delete the quantity field from the cloned objects
+  delete item1Copy.quantity;
+  delete item2Copy.quantity;
+
+  // Compare the objects after removing the quantity field
+  return _.isEqual(item1Copy, item2Copy);
 }
 
+// Function to increment or decrement the quantity of an item in the cart
 function incrementDecrementItemQuantity(item, action, quantity) {
   const cart = useCartStore.getState().cart;
-  let cartCopy = cart.slice();
-  // getting all same items in the cart
-  const existingItems = cart.filter((cartItem) => cartItem.item === item.item);
-  for (const matchingItem of existingItems) {
-    // checking for identical order (for example: same removed ingredients)
+  let cartCopy = [...cart]; // Clone the cart
+  // Get all items in the cart with the same 'item' property
+  const existingItemsList = cart.filter((cartItem) =>
+    _.isEqual(cartItem.item, item.item)
+  );
+
+  for (const matchingItem of existingItemsList) {
+    // Check for identical items (excluding the quantity)
     if (matchItems(matchingItem, item) === true) {
-      const indexOfExistingItem = cart.indexOf(matchingItem);
+      const index = cart.indexOf(matchingItem);
+
       if (action === "increment") {
-        cartCopy[indexOfExistingItem].quantity += quantity;
+        // Increment the quantity
+        cartCopy[index].quantity += quantity;
       } else if (action === "decrement") {
-        if (quantity >= cart[indexOfExistingItem].quantity) {
-          return {
-            cart: cart.filter((cartItem) => cartItem !== item),
-          };
+        // Decrement the quantity, and remove the item if the quantity becomes zero
+        if (quantity >= cartCopy[index].quantity) {
+          cartCopy = cartCopy.filter((cartItem) => cartItem !== matchingItem);
+        } else {
+          cartCopy[index].quantity -= quantity;
         }
-        cartCopy[indexOfExistingItem].quantity -= quantity;
       }
     }
   }
   return { cart: cartCopy };
 }
 
+// Initial state of the cart
 const initialState = {
   cart: [],
 };
 
+// Zustand store for managing the cart
 export const useCartStore = create((set) => ({
   ...initialState,
+
+  // Function to set the entire cart manually
   setCart: (cart) =>
     set((state) => ({
       cart: cart,
     })),
+
   addToCart: (item) =>
     set((state) => {
-      // Check if item is in cart
+      // Check if the item is already in the cart
       if (checkIfItemInCart(item)) {
+        // If it exists, increment the quantity
         return incrementDecrementItemQuantity(item, "increment", item.quantity);
       }
-      // If item not in cart, just add it
+      // If the item is not in the cart, add it
       return { cart: [...state.cart, item] };
     }),
+
   incrementQuantity: (item, incrementBy = 1) =>
-    set((state) => {
-      // Check if item is in cart
-      if (checkIfItemInCart(item)) {
-        return incrementDecrementItemQuantity(item, "increment", incrementBy);
-      }
-      // Fallback, this function should be called only in the cart page where it's sure that the item exists
-      return { cart: [...state.cart] };
-    }),
+    set((state) => ({
+      cart: incrementDecrementItemQuantity(item, "increment", incrementBy).cart,
+    })),
+
   decrementQuantity: (item, decrementBy = 1) =>
-    set((state) => {
-      // Check if item is in cart
-      if (checkIfItemInCart(item)) {
-        return incrementDecrementItemQuantity(item, "decrement", decrementBy);
-      }
-      // Fallback, this function should be called only in the cart page where it's sure that the item exists
-      return { cart: [...state.cart] };
-    }),
+    set((state) => ({
+      cart: incrementDecrementItemQuantity(item, "decrement", decrementBy).cart,
+    })),
+
+  // Function to reset the cart to the initial state
   reset: () => set(() => ({ ...initialState })),
 }));
