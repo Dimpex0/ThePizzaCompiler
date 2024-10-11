@@ -1,0 +1,42 @@
+.item-card {
+  width: 200px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--dark-grey);
+  color: var(--white-smoke);
+}
+
+.item-card img {
+  max-width: 100%;
+}
+
+.name-price-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+}
+
+.item-card .name {
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+.item-card .price {
+  font-size: 24px;
+}
+
+.add-button {
+  width: 100%;
+  background-color: var(--yellow) !important;
+  border-radius: 0 !important;
+  border: 0;
+  transition: 300ms;
+}
+
+.add-button:hover {
+  background-color: var(--green) !important;
+}

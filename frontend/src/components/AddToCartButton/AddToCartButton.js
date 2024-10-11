@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAccountStore } from "../../store/account";
 import { useCartStore } from "../../store/cart";
 import "./AddToCartButton.css";
-import { useEffect } from "react";
 
 export default function AddToCartButton({ itemData, ...props }) {
   const { addToCart } = useCartStore();

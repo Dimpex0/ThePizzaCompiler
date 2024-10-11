@@ -16,7 +16,7 @@ export default function OrderSummary() {
         cartItem.item[`${cartItem.selectedSize}_price`] * cartItem.quantity
       );
     } else {
-      totalPrice += Number(cartItem.price);
+      totalPrice += Number(cartItem.item.price) * cartItem.quantity;
     }
   }
 

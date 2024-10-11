@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'backend.pizza',
     'backend.cart',
     'backend.account',
+    'backend.drink',
     
     # 3rd party apps
     'rest_framework',

@@ -8,8 +8,11 @@ export default function CartItem({ cartItem }) {
   let price;
   if (cartItem.selectedSize) {
     price = (
-      cartItem.item[`${cartItem.selectedSize}_price`] * cartItem.quantity
+      Number(cartItem.item[`${cartItem.selectedSize}_price`]) *
+      cartItem.quantity
     ).toFixed(2);
+  } else {
+    price = (Number(cartItem.item.price) * cartItem.quantity).toFixed(2);
   }
 
   return (

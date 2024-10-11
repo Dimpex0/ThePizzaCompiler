@@ -4,7 +4,7 @@
   background-color: var(--dark-grey);
   border-radius: 12px;
   overflow: hidden;
-  color: white;
+  color: var(--white-smoke);
 }
 
 .pizza-card-container img {

@@ -8,7 +8,6 @@ import largeImg from "../../assets/icons/large-pizza-icon.png";
 
 import "./PizzaDetails.css";
 import AddToCartButton from "../../components/AddToCartButton/AddToCartButton";
-import { useCartStore } from "../../store/cart";
 
 export default function PizzaDetailsPage() {
   const { pizzaSlug } = useParams();
@@ -19,8 +18,6 @@ export default function PizzaDetailsPage() {
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState();
   const [error, setError] = useState("");
-
-  const { incrementQuantity } = useCartStore();
 
   // Map for pizza sizes and prices
   const sizeMap = {

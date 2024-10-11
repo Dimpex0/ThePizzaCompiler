@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootPage from "./pages/Root/Root";
 import MenuPage from "./pages/Menu/Menu";
 import PizzaMenuPage from "./pages/PizzaMenu/PizzaMenu";
-import DrinksPage from "./pages/Drinks/Drinks";
+import DrinksMenuPage from "./pages/DrinksMenu/DrinksMenu";
 import PizzaDetailsPage from "./pages/PizzaDetails/PizzaDetails";
 import { useCartStore } from "./store/cart";
 import { useEffect, useRef } from "react";
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
           },
           { path: "menu/pizza", element: <PizzaMenuPage /> },
           { path: "menu/pizza/:pizzaSlug", element: <PizzaDetailsPage /> },
-          { path: "menu/drinks", element: <DrinksPage /> },
+          { path: "menu/drinks", element: <DrinksMenuPage /> },
         ],
       },
       { path: "cart", element: <CartPage /> },
