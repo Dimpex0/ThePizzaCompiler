@@ -7,6 +7,7 @@ import OrderSummary from "../../components/OrderSummary/OrderSummary";
 
 export default function CartPage() {
   const { cart } = useCartStore();
+  const cartReversedCopy = [...cart].reverse();
   return (
     <div className="page-container">
       <section className="cart-section">
@@ -15,8 +16,8 @@ export default function CartPage() {
           <p>{cart?.length} Items</p>
         </div>
         <ul>
-          {cart &&
-            cart.map((cartItem, index) => (
+          {cartReversedCopy &&
+            cartReversedCopy.map((cartItem, index) => (
               <CartItem key={index} cartItem={cartItem} />
             ))}
         </ul>

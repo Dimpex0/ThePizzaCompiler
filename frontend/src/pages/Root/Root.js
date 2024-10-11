@@ -12,11 +12,6 @@ export default function RootPage() {
   window.addGlobalMessage = (messages) => {
     msgs.current.show(messages);
     setMessageClass(messages[0].severity);
-
-    // setTimeout(() => {
-    //   msgs.current.clear();
-    //   console.log("clear");
-    // }, 3000);
   };
 
   return (

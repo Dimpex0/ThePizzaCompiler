@@ -10,6 +10,7 @@ import "./Login.css";
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const updateIsLoggedIn = useAccountStore((state) => state.updateIsLoggedIn);
   const updateIsAdmin = useAccountStore((state) => state.updateIsAdmin);
 
@@ -28,12 +29,14 @@ export default function LoginPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     const response = await login(formData);
     const responseData = await response.json();
     // returns {message, isAdmin} and a status code
     if (!response.ok) {
       setError(responseData.message);
       setFormData({ username: "", password: "" });
+      setIsLoading(false);
     } else {
       updateIsLoggedIn(true);
       if (responseData.isAdmin) {
@@ -46,6 +49,7 @@ export default function LoginPage() {
         navigate(-1);
         return 1;
       }
+      setIsLoading(false);
       navigate("/");
     }
   }
@@ -71,7 +75,7 @@ export default function LoginPage() {
         {error && <p className="error">{error}</p>}
         <Link to="#">Forgot password?</Link>
         <div className="action-container">
-          <button>Login</button>
+          <button disabled={isLoading}>Login</button>
           <Link to="#">Already have an account?</Link>
         </div>
       </form>

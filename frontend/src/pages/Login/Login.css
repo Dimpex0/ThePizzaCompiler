@@ -61,6 +61,10 @@ form button {
   background-color: var(--green);
 }
 
+.action-container button:disabled {
+  background-color: lightgray;
+}
+
 .action-container a {
   display: block;
   width: 100%;

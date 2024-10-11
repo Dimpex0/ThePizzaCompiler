@@ -23,9 +23,16 @@ export default function LogoutPage() {
         navigate("/account/login");
       })
       .catch(() => {
-        resetAccount();
         navigate("/account/login");
       });
+    window.addGlobalMessage([
+      {
+        life: 3000,
+        severity: "success",
+        detail: "Logged out successfully.",
+        closable: false,
+      },
+    ]);
   }
   return <button onClick={handleLogout}>Logout</button>;
 }
