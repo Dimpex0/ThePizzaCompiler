@@ -13,10 +13,9 @@
 
 .name-price-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
   padding: 10px 20px;
 }
 

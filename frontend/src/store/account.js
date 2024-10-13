@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: null,
   isAdmin: false,
 };
 

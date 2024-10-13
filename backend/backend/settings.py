@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'backend.cart',
     'backend.account',
     'backend.drink',
+    'backend.payment',
     
     # 3rd party apps
     'rest_framework',

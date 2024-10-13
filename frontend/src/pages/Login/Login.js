@@ -55,7 +55,7 @@ export default function LoginPage() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <p>Login</p>
         <input
           placeholder="Username"

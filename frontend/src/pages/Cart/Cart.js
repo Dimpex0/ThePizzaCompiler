@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCartStore } from "../../store/cart";
+import { useAccountStore } from "../../store/account";
 import CartItem from "../../components/CartItem/CartItem";
+import { useNavigate } from "react-router-dom";
 
 import "./Cart.css";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 
 export default function CartPage() {
   const { cart } = useCartStore();
+  const { isLoggedIn } = useAccountStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn === false) {
+      navigate("/account/login");
+    }
+  }, [isLoggedIn, navigate]);
+
   const cartReversedCopy = [...cart].reverse();
+
   return (
     <div className="page-container">
       <section className="cart-section">

@@ -1,4 +1,4 @@
-form {
+.login-form {
   max-width: 250px;
   min-height: 320px;
   margin: auto;
@@ -9,14 +9,14 @@ form {
   overflow: hidden;
 }
 
-form p {
+.login-form p {
   text-align: center;
   color: var(--white-smoke);
   font-size: 24px;
   margin: 20px 0;
 }
 
-form input {
+.login-form input {
   all: unset;
   margin: 0;
   padding: 10px;
@@ -26,11 +26,11 @@ form input {
   transition: 100ms;
 }
 
-form input:focus {
+.login-form input:focus {
   border-bottom: 2px solid var(--yellow);
 }
 
-form > a {
+.login-form > a {
   display: block;
   width: 100%;
   text-align: end;
@@ -39,7 +39,7 @@ form > a {
   padding: 0 10px;
 }
 
-form button {
+.login-form button {
   display: block;
   width: 100%;
 }

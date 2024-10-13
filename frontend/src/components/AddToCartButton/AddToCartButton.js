@@ -11,7 +11,7 @@ export default function AddToCartButton({ itemData, ...props }) {
   const navigate = useNavigate();
 
   function handleClick() {
-    if (!isLoggedIn) {
+    if (isLoggedIn === null) {
       navigate(`/account/login`, { state: { itemData } });
     } else {
       addToCart(itemData);
