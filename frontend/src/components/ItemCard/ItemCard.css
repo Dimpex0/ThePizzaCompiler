@@ -29,9 +29,13 @@
 }
 
 .add-button {
+  cursor: pointer;
   width: 100%;
-  background-color: var(--yellow) !important;
-  border-radius: 0 !important;
+  background-color: var(--yellow);
+  color: var(--white-smoke);
+  padding: 10px 0;
+  text-transform: uppercase;
+  border-radius: 0;
   border: 0;
   transition: 300ms;
 }

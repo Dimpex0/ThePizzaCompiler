@@ -25,7 +25,7 @@ class UPDATECartItems(RetrieveUpdateAPIView):
     
     def get_object(self):
         # Retrieve the cart for the logged-in user, or create one if none exists
-        cart, created = Cart.objects.get_or_create(user=self.request.user, paid=False)
+        cart, created = Cart.objects.get_or_create(user=self.request.user)
         return cart
     
     def update(self, request, *args, **kwargs):

@@ -9,7 +9,7 @@ export default function ItemCard({ drink }) {
       <img src={drink.image} alt={drink.name} />
       <div className="name-price-container">
         <p className="name">{drink.name}</p>
-        <p className="price">{drink.price}$</p>
+        <p className="price">{drink.price} BGN</p>
       </div>
       <AddToCartButton
         itemData={{

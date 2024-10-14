@@ -16,6 +16,7 @@ import PrivacyPolicyPage from "./pages/Legal/PrivacyPolicy/PrivacyPolicy";
 import TermsAndConditionsPage from "./pages/Legal/TermsAndConditions/TermsAndConditions";
 import CookiePolicyPage from "./pages/Legal/CookiePolicy/CookiePolicy";
 import LegalDisclaimerPage from "./pages/Legal/LegalDisclaimer/LegalDisclaimer";
+import SuccessPaymentPage from "./pages/SuccessPayment/SuccessPayment";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             element: <LogoutPage />,
           },
         ],
+      },
+      {
+        path: "payment",
+        children: [{ path: "success", element: <SuccessPaymentPage /> }],
       },
       {
         path: "legal",

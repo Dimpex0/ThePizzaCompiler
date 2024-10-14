@@ -49,6 +49,7 @@ code {
 }
 
 .p-message-error {
+  color: var(--white-smoke);
   background-color: var(--red);
 }
 

@@ -127,7 +127,7 @@ export default function PizzaDetailsPage() {
                                   ingredient,
                                 ])
                               }
-                              className="fa-solid fa-xmark remove-button"
+                              className="fa-solid fa-xmark remove-ingredient-button"
                             ></i>
                           )}
                           <p>{ingredient.name}</p>
@@ -142,7 +142,7 @@ export default function PizzaDetailsPage() {
                                   )
                                 )
                               }
-                              className="fa-solid fa-plus add-button"
+                              className="fa-solid fa-plus add-ingredient-button"
                             ></i>
                           )}
                         </div>
@@ -152,7 +152,7 @@ export default function PizzaDetailsPage() {
                 )}
               </div>
               <div className="add-to-cart-container">
-                <p className="price">{price}$</p>
+                <p className="price">{price} BGN</p>
                 <div className="quantity-container">
                   <i
                     onClick={() => {

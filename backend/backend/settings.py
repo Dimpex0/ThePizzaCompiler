@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'backend.account',
     'backend.drink',
     'backend.payment',
+    'backend.order',
     
     # 3rd party apps
     'rest_framework',

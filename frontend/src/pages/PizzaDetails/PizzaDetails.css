@@ -81,8 +81,8 @@ h1 {
   text-decoration: line-through;
 }
 
-.remove-button,
-.add-button {
+.remove-ingredient-button,
+.add-ingredient-button {
   padding: 10px;
   font-size: 20px;
   border-radius: 12px;
@@ -90,11 +90,11 @@ h1 {
   cursor: pointer;
 }
 
-.remove-button {
+.remove-ingredient-button {
   background-color: var(--red);
 }
 
-.add-button {
+.add-ingredient-button {
   background-color: var(--green);
 }
 

@@ -1,0 +1,21 @@
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fa-receipt {
+  color: var(--green);
+  font-size: 300px;
+}
+
+.success-page h1 {
+  color: var(--green);
+  font-size: 40px;
+}
+
+.success-page p {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 24px;
+}

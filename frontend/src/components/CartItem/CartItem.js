@@ -42,7 +42,7 @@ export default function CartItem({ cartItem }) {
           className="fa-solid fa-plus"
         ></i>
       </div>
-      <p className="cart-item-price">{price}$</p>
+      <p className="cart-item-price">{price} BGN</p>
       <i
         onClick={() => decrementQuantity(cartItem, cartItem.quantity)}
         className="fa-solid fa-trash-can remove-btn"

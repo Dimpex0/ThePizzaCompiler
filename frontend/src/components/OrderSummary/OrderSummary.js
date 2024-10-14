@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import { useCartStore } from "../../store/cart";
 
 import "./OrderSummary.css";
-import { getPaymentOrderCode } from "../../utils/payment";
-import { useNavigate } from "react-router-dom";
+import { createOrder, getPaymentOrderCode } from "../../utils/payment";
 
 export default function OrderSummary() {
   const { cart } = useCartStore();
   const [addressField, setAddressField] = useState(false);
   const [address, setAddress] = useState("");
   const [isLoadingPayment, setIsLoadingPayment] = useState(false);
-
-  const navigate = useNavigate();
 
   let totalPrice = 0;
 
@@ -26,7 +23,6 @@ export default function OrderSummary() {
   }
 
   function handleChange(e) {
-    console.log(e.target.value);
     if (e.target.value === "delivery") {
       setAddressField(true);
     } else {
@@ -37,15 +33,40 @@ export default function OrderSummary() {
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoadingPayment(true);
-    const response = await getPaymentOrderCode(totalPrice);
-    if (response.ok) {
-      const responseData = await response.json();
-      const orderCode = responseData.orderCode;
-
-      window.location.replace(
-        `https://demo.vivapayments.com/web2/?ref=${orderCode}&color=ffa600`
-      );
+    // Creates a Viva Waller order code for payment
+    const orderCodeResponse = await getPaymentOrderCode(totalPrice);
+    if (orderCodeResponse.ok) {
+      // If order code created successfully, create Order for that order code
+      const orderCodeResponseData = await orderCodeResponse.json();
+      const orderCode = orderCodeResponseData.orderCode;
+      const orderCreateResponse = await createOrder(totalPrice, orderCode);
+      if (orderCreateResponse.ok) {
+        // Navigate to payment page that then redirects to success/error payment page
+        if (orderCode) {
+          window.location.href = `https://demo.vivapayments.com/web2/?ref=${orderCode}&color=ffa600`;
+        } else {
+          window.addGlobalMessage([
+            {
+              life: 3000,
+              severity: "error",
+              detail:
+                "Couldn't create payment. Please try again or contact us.",
+              closable: false,
+            },
+          ]);
+        }
+      } else {
+        window.addGlobalMessage([
+          {
+            life: 3000,
+            severity: "error",
+            detail: "Couldn't create order. Please try again or contact us.",
+            closable: false,
+          },
+        ]);
+      }
     }
+
     setIsLoadingPayment(false);
   }
 
@@ -68,7 +89,7 @@ export default function OrderSummary() {
         )}
         <div className="total-container">
           <p>Total cost</p>
-          <p>{totalPrice.toFixed(2)}$</p>
+          <p>{totalPrice.toFixed(2)} BGN</p>
           <button disabled={isLoadingPayment}>
             {isLoadingPayment ? (
               <i className="fa-solid fa-arrows-rotate"></i>
