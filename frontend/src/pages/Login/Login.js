@@ -75,7 +75,13 @@ export default function LoginPage() {
         {error && <p className="error">{error}</p>}
         <Link to="#">Forgot password?</Link>
         <div className="action-container">
-          <button disabled={isLoading}>Login</button>
+          <button disabled={isLoading}>
+            {isLoading ? (
+              <i className="fa-solid fa-arrows-rotate"></i>
+            ) : (
+              "Checkout"
+            )}
+          </button>
           <Link to="#">Already have an account?</Link>
         </div>
       </form>

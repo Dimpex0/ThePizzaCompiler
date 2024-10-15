@@ -16,7 +16,11 @@ export default function CartPage() {
     if (isLoggedIn === false) {
       navigate("/account/login");
     }
-  }, [isLoggedIn, navigate]);
+    if (cart.length <= 0) {
+      // redirects before cart is fetched
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate, cart]);
 
   const cartReversedCopy = [...cart].reverse();
 

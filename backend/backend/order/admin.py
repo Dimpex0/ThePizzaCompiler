@@ -5,3 +5,4 @@ from .models import Order
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'amount']
+    readonly_fields = ['order_code', 'transaction_id', 'user']

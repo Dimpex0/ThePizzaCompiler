@@ -9,6 +9,7 @@ class Order(models.Model):
         CREATED = 'CREATED', 'Created'
         PAID = 'PAID', 'Paid'
         BAKING = 'BAKING', 'Baking'
+        READY_FOR_PICK_UP = 'READY FOR PICK UP', 'Ready for pick up'
         DELIVERING = 'DELIVERING', 'Delivering'
         DELIVERED = 'DELIVERED', 'Delivered'
         
@@ -48,6 +49,34 @@ class Order(models.Model):
     items = models.JSONField(
         null=False,
         blank=False,
+    )
+    first_name = models.CharField(
+        max_length=255,
+        default='',
+        null=False,
+        blank=False
+    )
+    last_name = models.CharField(
+        max_length=255,
+        default='',
+        null=False,
+        blank=False
+    )
+    phone = models.CharField(
+        max_length=255,
+        default='',
+        null=False,
+        blank=False
+    )
+    delivery = models.BooleanField(
+        default=False,
+        null=False,
+        blank=False,
+    )
+    address = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

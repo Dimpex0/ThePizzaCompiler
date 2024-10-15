@@ -44,7 +44,7 @@
   color: black;
 }
 
-.order-summary-form .fa-arrows-rotate {
+.fa-arrows-rotate {
   animation: rotate 1.5s linear infinite;
 }
 

@@ -85,25 +85,11 @@ class VerifyTransaction(APIView):
 
             order = Order.objects.get(order_code=order_code)
             order.transaction_id = transaction_id
-            order.status = Order.OrderStatus.PAID
+            order.status = Order.OrderStatus.PAID if order.delivery else Order.OrderStatus.BAKING
             order.save()
             
             cart.delete()
             return Response({"message": 'Order created.'}, status=status.HTTP_201_CREATED)
         else:
             return Response({"message": "Couldn't verify transaction."}, status=status.HTTP_404_NOT_FOUND)
-        
-        
-class CreateOrder(APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
-    
-    def post(self, request):
-        amount = request.data.get('amount')
-        order_code = request.data.get('orderCode')
-        
-        cart = Cart.objects.get(user=request.user)
-        
-        order = Order.objects.create(user=request.user, status=Order.OrderStatus.CREATED, items=cart.items, amount=amount, order_code=order_code)
-        return Response({"message": "Order created.", 'orderId': order.pk}, status=status.HTTP_201_CREATED)
         

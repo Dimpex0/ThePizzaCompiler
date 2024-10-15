@@ -7,7 +7,13 @@ import { createOrder, getPaymentOrderCode } from "../../utils/payment";
 export default function OrderSummary() {
   const { cart } = useCartStore();
   const [addressField, setAddressField] = useState(false);
-  const [address, setAddress] = useState("");
+  const [formData, setFormData] = useState({
+    delivery: false,
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: "",
+  });
   const [isLoadingPayment, setIsLoadingPayment] = useState(false);
 
   let totalPrice = 0;
@@ -24,10 +30,23 @@ export default function OrderSummary() {
 
   function handleChange(e) {
     if (e.target.value === "delivery") {
-      setAddressField(true);
+      setFormData((prev) => ({
+        ...prev,
+        delivery: true,
+      }));
     } else {
-      setAddressField(false);
+      setFormData((prev) => ({
+        ...prev,
+        delivery: false,
+      }));
     }
+  }
+
+  function handleFormChange(e) {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   }
 
   async function handleSubmit(e) {
@@ -39,7 +58,11 @@ export default function OrderSummary() {
       // If order code created successfully, create Order for that order code
       const orderCodeResponseData = await orderCodeResponse.json();
       const orderCode = orderCodeResponseData.orderCode;
-      const orderCreateResponse = await createOrder(totalPrice, orderCode);
+      const orderCreateResponse = await createOrder(
+        totalPrice,
+        orderCode,
+        formData
+      );
       if (orderCreateResponse.ok) {
         // Navigate to payment page that then redirects to success/error payment page
         if (orderCode) {
@@ -78,19 +101,44 @@ export default function OrderSummary() {
           <option value="pick-up">Pick up</option>
           <option value="delivery">Delivery</option>
         </select>
-        {addressField && (
+        <div>
+          <input
+            required
+            placeholder="First name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleFormChange}
+          />
+          <input
+            required
+            placeholder="Last name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleFormChange}
+          />
+        </div>
+        <input
+          required
+          placeholder="Phone"
+          name="phone"
+          value={formData.phone}
+          onChange={handleFormChange}
+          type="tel"
+        />
+        {formData.delivery && (
           <input
             required
             name="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={formData.address}
+            onChange={handleFormChange}
             placeholder="Address..."
+            max="255"
           />
         )}
         <div className="total-container">
           <p>Total cost</p>
           <p>{totalPrice.toFixed(2)} BGN</p>
-          <button disabled={isLoadingPayment}>
+          <button disabled={isLoadingPayment || cart.length <= 0}>
             {isLoadingPayment ? (
               <i className="fa-solid fa-arrows-rotate"></i>
             ) : (

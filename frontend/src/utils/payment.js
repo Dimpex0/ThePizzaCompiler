@@ -35,9 +35,9 @@ export async function verifyTransaction(transactionId, orderCode) {
   return response;
 }
 
-export async function createOrder(amount, orderCode) {
+export async function createOrder(amount, orderCode, formData) {
   const response = await fetch(
-    `${process.env.REACT_APP_API_DOMAIN}/payment/create-order/`,
+    `${process.env.REACT_APP_API_DOMAIN}/order/create-order/`,
     {
       method: "POST",
       credentials: "include",
@@ -45,7 +45,7 @@ export async function createOrder(amount, orderCode) {
         "Content-Type": "application/json",
         "X-CSRFToken": getCsrfToken(),
       },
-      body: JSON.stringify({ amount, orderCode }),
+      body: JSON.stringify({ amount, orderCode, ...formData }),
     }
   );
   return response;

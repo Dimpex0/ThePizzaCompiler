@@ -9,6 +9,8 @@ export default function MainNavigation() {
   const { isLoggedIn } = useAccountStore();
   const { cart } = useCartStore();
 
+  const disabledCart = !isLoggedIn || cart.length <= 0;
+
   return (
     <>
       <div id="demo-banner">
@@ -28,7 +30,7 @@ export default function MainNavigation() {
               <Link to="/">Menu</Link>
             </li>
             <li>
-              <Link to="/cart" className={`${isLoggedIn ? "" : "disabled"}`}>
+              <Link to="/cart" className={`${disabledCart ? "disabled" : ""}`}>
                 {cart.length > 0 && (
                   <p className="cart-quantity">
                     {cart.length <= 9 ? cart.length : "9+"}

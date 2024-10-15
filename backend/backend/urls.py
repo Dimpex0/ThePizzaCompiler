@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/account/', include('backend.account.urls')),
     path('api/drink/', include('backend.drink.urls')),
     path('api/payment/', include('backend.payment.urls')),
+    path('api/order/', include('backend.order.urls')),
 ]
 
 if settings.DEBUG:
