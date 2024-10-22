@@ -5,7 +5,7 @@ import PizzaMenuPage from "./pages/PizzaMenu/PizzaMenu";
 import DrinksMenuPage from "./pages/DrinksMenu/DrinksMenu";
 import PizzaDetailsPage from "./pages/PizzaDetails/PizzaDetails";
 import { useCartStore } from "./store/cart";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CartPage from "./pages/Cart/Cart";
 import { retrieveCart, updateCartItemsToBackend } from "./utils/cart";
 import LoginPage from "./pages/Login/Login";
@@ -75,6 +75,8 @@ function App() {
   const updateIsLoggedIn = useAccountStore((state) => state.updateIsLoggedIn);
   const updateIsAdmin = useAccountStore((state) => state.updateIsAdmin);
 
+  const [cartInitialized, setCartInitialized] = useState(false);
+
   useEffect(() => {
     async function chechAccountSession() {
       const response = await checkSession();
@@ -98,22 +100,23 @@ function App() {
       const response = await updateCartItemsToBackend(cart);
       // handle response
     }
+
     console.log(cart);
 
-    if (!isFirstRender.current) {
+    // Ensure it's not the first render and cart has been initialized
+    if (!isFirstRender.current && cartInitialized) {
       updateCartItems();
     }
-  }, [cart]);
+  }, [cart, cartInitialized]); // Added cartInitialized as a dependency
 
+  // Effect to retrieve cart on the first render or when the user is logged in
   useEffect(() => {
     async function getCart() {
       const response = await retrieveCart();
       const responseData = await response.json();
       if (response.ok) {
-        console.log(responseData);
         setCart(responseData.items);
-      } else {
-        //
+        setCartInitialized(true); // Mark cart as initialized after first retrieval
       }
     }
 

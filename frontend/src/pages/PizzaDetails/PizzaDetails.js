@@ -34,6 +34,8 @@ export default function PizzaDetailsPage() {
   const [otherIngredients, setOtherIngredients] = useState({});
   const [currentPizza, setCurrentPizza] = useState({});
 
+  console.log(currentPizza);
+
   useEffect(() => {
     async function fetchPizza() {
       try {
@@ -42,13 +44,12 @@ export default function PizzaDetailsPage() {
         if (response.ok) {
           setPizza(responseData);
           setCurrentPizza({
-            id: responseData.id,
+            item_id: responseData.id,
             image: responseData.image,
             name: responseData.name,
             ingredients: responseData.ingredients,
             price: responseData.medium_price,
             size: "medium",
-            pizza: responseData,
             type: "Pizza",
           });
           setError("");

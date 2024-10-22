@@ -11,12 +11,10 @@ function checkIfItemInCart(item) {
   if (listOfExistingItems.length > 0) {
     for (const cartItem of listOfExistingItems) {
       if (matchItems(cartItem, item)) {
-        console.log("match");
         return true;
       }
     }
   }
-  console.log("no match");
   return false;
 }
 
