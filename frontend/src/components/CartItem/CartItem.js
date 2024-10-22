@@ -5,21 +5,14 @@ import "./CartItem.css";
 
 export default function CartItem({ cartItem }) {
   const { incrementQuantity, decrementQuantity } = useCartStore();
-  let price;
-  if (cartItem.selectedSize) {
-    price = (
-      Number(cartItem.item[`${cartItem.selectedSize}_price`]) *
-      cartItem.quantity
-    ).toFixed(2);
-  } else {
-    price = (Number(cartItem.item.price) * cartItem.quantity).toFixed(2);
-  }
+
+  let price = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
 
   return (
     <li className="cart-item">
-      <img src={cartItem.item.image} alt={cartItem.item.name} />
+      <img src={cartItem.image} alt={cartItem.name} />
       <div className="cart-item-info">
-        <p className="cart-item-name">{cartItem.item.name}</p>
+        <p className="cart-item-name">{cartItem.name}</p>
         <p className="cart-item-additional">
           {cartItem.removedIngredients?.length > 0 &&
             "Removed: " +

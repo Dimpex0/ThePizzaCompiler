@@ -6,7 +6,6 @@ import { createOrder, getPaymentOrderCode } from "../../utils/payment";
 
 export default function OrderSummary() {
   const { cart } = useCartStore();
-  const [addressField, setAddressField] = useState(false);
   const [formData, setFormData] = useState({
     delivery: false,
     firstName: "",
@@ -19,13 +18,7 @@ export default function OrderSummary() {
   let totalPrice = 0;
 
   for (const cartItem of cart) {
-    if (cartItem.selectedSize) {
-      totalPrice += Number(
-        cartItem.item[`${cartItem.selectedSize}_price`] * cartItem.quantity
-      );
-    } else {
-      totalPrice += Number(cartItem.item.price) * cartItem.quantity;
-    }
+    totalPrice += Number(cartItem.price) * cartItem.quantity;
   }
 
   function handleChange(e) {

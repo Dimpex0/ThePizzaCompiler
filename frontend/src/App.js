@@ -98,6 +98,7 @@ function App() {
       const response = await updateCartItemsToBackend(cart);
       // handle response
     }
+    console.log(cart);
 
     if (!isFirstRender.current) {
       updateCartItems();
@@ -109,6 +110,7 @@ function App() {
       const response = await retrieveCart();
       const responseData = await response.json();
       if (response.ok) {
+        console.log(responseData);
         setCart(responseData.items);
       } else {
         //

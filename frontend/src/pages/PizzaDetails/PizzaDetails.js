@@ -9,15 +9,83 @@ import largeImg from "../../assets/icons/large-pizza-icon.png";
 import "./PizzaDetails.css";
 import AddToCartButton from "../../components/AddToCartButton/AddToCartButton";
 
+const INGREDIENT_ORDER = [
+  "DOUGH",
+  "SAUCE",
+  "CHEESE",
+  "MEAT",
+  "VEGETABLE",
+  "HERB_SPICE",
+  "SPECIAL",
+  "ADD ON",
+];
+
+const CHANGE_INGREDIENTS = ["DOUGH", "SAUCE"];
+
 export default function PizzaDetailsPage() {
   const { pizzaSlug } = useParams();
   const [pizza, setPizza] = useState();
   const [removedIngredients, setRemovedIngredients] = useState([]);
-  const [separatedIngredients, setSeparatedIngredients] = useState({});
   const [selectedSize, setSelectedSize] = useState("medium");
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState();
   const [error, setError] = useState("");
+
+  const [originalIngredients, setOriginalIngredients] = useState({});
+  const [otherIngredients, setOtherIngredients] = useState({});
+  const [currentPizza, setCurrentPizza] = useState({});
+
+  useEffect(() => {
+    async function fetchPizza() {
+      try {
+        const response = await getPizzaDetails(pizzaSlug);
+        const responseData = await response.json();
+        if (response.ok) {
+          setPizza(responseData);
+          setCurrentPizza({
+            id: responseData.id,
+            image: responseData.image,
+            name: responseData.name,
+            ingredients: responseData.ingredients,
+            price: responseData.medium_price,
+            size: "medium",
+            pizza: responseData,
+            type: "Pizza",
+          });
+          setError("");
+        } else {
+          setError("Couldn't find pizza.");
+        }
+      } catch {
+        setError("Error fetching pizza details.");
+      }
+    }
+    fetchPizza();
+  }, [pizzaSlug]);
+
+  // Separating pizza ingredients
+  useEffect(() => {
+    if (pizza) {
+      let ingredients = {};
+      for (const ingredient of pizza.ingredients) {
+        if (ingredient.type in ingredients) {
+          ingredients[ingredient.type].push(ingredient);
+        } else {
+          ingredients[ingredient.type] = [ingredient];
+        }
+      }
+      setOriginalIngredients(ingredients);
+
+      ingredients = {};
+      for (const ingredient of pizza.other_ingredients) {
+        if (ingredient.type in ingredients) {
+          ingredients[ingredient.type].push(ingredient);
+        } else {
+          ingredients[ingredient.type] = [ingredient];
+        }
+      }
+      setOtherIngredients(ingredients);
+    }
+  }, [pizza, setOriginalIngredients, setOtherIngredients]);
 
   // Map for pizza sizes and prices
   const sizeMap = {
@@ -29,50 +97,41 @@ export default function PizzaDetailsPage() {
   // Update price based on selected size and quantity
   useEffect(() => {
     if (pizza && sizeMap[selectedSize]?.price) {
-      setPrice((quantity * sizeMap[selectedSize].price).toFixed(2));
+      const price = (quantity * sizeMap[selectedSize].price).toFixed(2);
+      setCurrentPizza((prev) => ({ ...prev, price: price }));
     }
+    setCurrentPizza((prev) => ({
+      ...prev,
+      size: selectedSize,
+    }));
   }, [pizza, quantity, selectedSize]);
 
-  // Separate ingredients into categories
-  useEffect(() => {
-    if (pizza) {
-      const types = [
-        "DOUGH",
-        "SAUCE",
-        "CHEESE",
-        "MEAT",
-        "VEGETABLE",
-        "HERB_SPICE",
-        "SPECIAL",
-      ];
-      const categorizedIngredients = types.reduce((acc, type) => {
-        const filtered = pizza.ingredients.filter(
-          (ingredient) => ingredient.type === type
-        );
-        if (filtered.length > 0) acc[type] = filtered;
-        return acc;
-      }, {});
-      setSeparatedIngredients(categorizedIngredients);
-    }
-  }, [pizza]);
+  function handleIngredientChange(e, ingredient) {
+    if (e.target.checked) {
+      console.log("checked");
 
-  useEffect(() => {
-    async function fetchPizza() {
-      try {
-        const response = await getPizzaDetails(pizzaSlug);
-        const responseData = await response.json();
-        if (response.ok) {
-          setPizza(responseData);
-          setError("");
-        } else {
-          setError("Couldn't find pizza.");
-        }
-      } catch {
-        setError("Error fetching pizza details.");
+      if (CHANGE_INGREDIENTS.includes(ingredient.type)) {
+        setCurrentPizza((prev) => ({
+          ...prev,
+          ingredients: [
+            ...prev.ingredients.filter((ing) => ing.type !== ingredient.type),
+            ingredient,
+          ],
+        }));
+      } else {
+        setCurrentPizza((prev) => ({
+          ...prev,
+          ingredients: [...prev.ingredients, ingredient],
+        }));
       }
+    } else {
+      console.log("unchecked");
+      setCurrentPizza((prev) => ({
+        ...prev,
+        ingredients: prev.ingredients.filter((ing) => ing.id !== ingredient.id),
+      }));
     }
-    fetchPizza();
-  }, [pizzaSlug]);
+  }
 
   return (
     <>
@@ -102,57 +161,77 @@ export default function PizzaDetailsPage() {
                 ))}
               </div>
               <div className="ingredients-container">
-                {Object.entries(separatedIngredients).map(
-                  ([type, ingredients]) => (
-                    <div className="ingredient-container" key={type}>
-                      <p>{type}</p>
-                      {ingredients.map((ingredient) => (
-                        <div
-                          className={`ingredient-item${
-                            removedIngredients.some(
-                              (removed) => removed.id === ingredient.id
-                            )
-                              ? " removed"
-                              : ""
-                          }`}
-                          key={ingredient.id}
-                        >
-                          {!removedIngredients.some(
-                            (removed) => removed.id === ingredient.id
-                          ) && (
-                            <i
-                              onClick={() =>
-                                setRemovedIngredients((prev) => [
-                                  ...prev,
-                                  ingredient,
-                                ])
-                              }
-                              className="fa-solid fa-xmark remove-ingredient-button"
-                            ></i>
-                          )}
-                          <p>{ingredient.name}</p>
-                          {removedIngredients.some(
-                            (removed) => removed.id === ingredient.id
-                          ) && (
-                            <i
-                              onClick={() =>
-                                setRemovedIngredients((prev) =>
-                                  prev.filter(
-                                    (removed) => removed.id !== ingredient.id
-                                  )
-                                )
-                              }
-                              className="fa-solid fa-plus add-ingredient-button"
-                            ></i>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )
+                {INGREDIENT_ORDER.map(
+                  (type) =>
+                    (originalIngredients[type]?.length > 0 ||
+                      otherIngredients[type]?.length > 0) && (
+                      <div key={type} className="ingredient-container">
+                        <p>{type}</p>
+
+                        {/* Render original ingredients if available */}
+                        {originalIngredients[type]?.length > 0 &&
+                          originalIngredients[type].map((ingredient) => (
+                            <div key={ingredient.id}>
+                              <input
+                                type={
+                                  ingredient.edit_type === "CHANGE"
+                                    ? "radio"
+                                    : "checkbox"
+                                }
+                                id={ingredient.name}
+                                name={type}
+                                defaultChecked={
+                                  currentPizza.ingredients?.filter(
+                                    (ing) => ing.id === ingredient.id
+                                  ).length > 0
+                                    ? true
+                                    : false
+                                }
+                                onChange={(e) =>
+                                  handleIngredientChange(e, ingredient)
+                                }
+                              />
+                              <label htmlFor={ingredient.name}>
+                                {ingredient.name}
+                              </label>
+                            </div>
+                          ))}
+
+                        {/* Render other ingredients if available */}
+                        {otherIngredients[type]?.length > 0 &&
+                          otherIngredients[type].map((ingredient) => (
+                            <div key={ingredient.id}>
+                              <input
+                                type={
+                                  ingredient.edit_type === "CHANGE"
+                                    ? "radio"
+                                    : "checkbox"
+                                }
+                                id={ingredient.name}
+                                name={type}
+                                defaultChecked={
+                                  currentPizza.ingredients?.filter(
+                                    (ing) => ing.id === ingredient.id
+                                  ).length > 0
+                                    ? true
+                                    : false
+                                }
+                                onChange={(e) =>
+                                  handleIngredientChange(e, ingredient)
+                                }
+                              />
+                              <label htmlFor={ingredient.name}>
+                                {ingredient.name}
+                              </label>
+                            </div>
+                          ))}
+                      </div>
+                    )
                 )}
               </div>
+
               <div className="add-to-cart-container">
-                <p className="price">{price} BGN</p>
+                <p className="price">{currentPizza.price} BGN</p>
                 <div className="quantity-container">
                   <i
                     onClick={() => {
@@ -170,14 +249,7 @@ export default function PizzaDetailsPage() {
                     className="fa-solid fa-plus"
                   ></i>
                 </div>
-                <AddToCartButton
-                  itemData={{
-                    item: pizza,
-                    removedIngredients: [...removedIngredients],
-                    selectedSize,
-                    quantity,
-                  }}
-                />
+                <AddToCartButton itemData={currentPizza} quantity={quantity} />
               </div>
             </div>
           </section>

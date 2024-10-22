@@ -36,10 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # own apps
-    'backend.pizza',
+    'backend.product',
+    'backend.product.pizza',
+    'backend.product.drink',
     'backend.cart',
     'backend.account',
-    'backend.drink',
     'backend.payment',
     'backend.order',
     

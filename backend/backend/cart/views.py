@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 
-from .models import Cart
+from .models import Cart, PizzaCartItem
 from .serializers import CartSerializer
 
 # Create your views here.
@@ -35,6 +35,11 @@ class UPDATECartItems(RetrieveUpdateAPIView):
         if items_data is None:
             return Response({"message": "Items field is required."}, status=status.HTTP_400_BAD_REQUEST)
 
+        for item in items_data:
+            if item['type'] == 'Pizza':
+                pass
+                
+        
         try:
             cart.items = items_data
             cart.save()   
@@ -43,3 +48,10 @@ class UPDATECartItems(RetrieveUpdateAPIView):
 
         serializer = self.get_serializer(cart)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+def add_pizza_item_to_cart(cart, item):
+    # obj, created = PizzaCartItem.objects.get_or_create(
+        
+    # )
+    pass

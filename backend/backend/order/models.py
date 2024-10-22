@@ -13,7 +13,6 @@ class Order(models.Model):
         DELIVERING = 'DELIVERING', 'Delivering'
         DELIVERED = 'DELIVERED', 'Delivered'
         
-    
     user = models.ForeignKey(
         UserModel,
         on_delete=models.SET_NULL,

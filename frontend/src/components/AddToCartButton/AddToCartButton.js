@@ -4,7 +4,7 @@ import { useAccountStore } from "../../store/account";
 import { useCartStore } from "../../store/cart";
 import "./AddToCartButton.css";
 
-export default function AddToCartButton({ itemData, ...props }) {
+export default function AddToCartButton({ itemData, quantity, ...props }) {
   const { addToCart } = useCartStore();
   const { isLoggedIn } = useAccountStore();
 
@@ -12,9 +12,9 @@ export default function AddToCartButton({ itemData, ...props }) {
 
   function handleClick() {
     if (isLoggedIn === null) {
-      navigate(`/account/login`, { state: { itemData } });
+      navigate(`/account/login`, { state: { itemData, quantity } });
     } else {
-      addToCart(itemData);
+      addToCart(itemData, quantity);
       window.addGlobalMessage([
         {
           life: 3000,
